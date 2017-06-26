@@ -4,6 +4,9 @@ import ListHome from './src/screens/ListHome'
 import HomeScreen from './src/screens/HomeScreen'
 import DetailHome from './src/screens/DetailHome'
 import { StackNavigator } from 'react-navigation'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import store from './src/store'
 export default class App extends React.Component {
  
   render() {
@@ -13,7 +16,11 @@ export default class App extends React.Component {
       detail: { screen: DetailHome }
     } )
     return (
+      <Provider store = { store }>
         <App />
+      </Provider>
+        
+      
     );
   }
 }

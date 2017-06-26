@@ -1,11 +1,27 @@
 import React, { Component } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, ActivityIndicator } from "react-native";
 import { Button, Container, Content, Item, Input, Icon } from "native-base";
 import RoundedBox from "../components/RoundedBox";
+import { connect } from "react-redux";
+import { fetchHome } from "../actions/home_actions";
+import { AppLoading } from 'expo'
 class HomeScreen extends Component {
   static navigationOptions = {
     title: "Home"
   };
+  state = { 
+    isReady: true
+  }
+   onSearchPres = async () => {
+    // this.setState( { isReady: false } )
+    // await this.props.fetchHome();
+    this.props.navigation.navigate("listhome", {
+      homes: this.props.homes
+    });
+    // this.setState( { isReady: true } )
+
+  }
+
   render() {
     const {
       firstText,
@@ -15,7 +31,20 @@ class HomeScreen extends Component {
       container,
       locationButton
     } = styles;
+
+    // if (!this.state.isReady) {
+    //   return ( 
+    //     <View style = { { alignSelf: 'center' }} >
+    //         <Text 
+    //         style = { { alignSelf: 'center', fontSize: 40 }}>
+    //          Loading... </Text>
+    //     </View>
+    //    )
+     
+    // }
+
     return (
+
       <View>
         <Text style={firstText}>
           Search for houses to buy!
@@ -30,7 +59,13 @@ class HomeScreen extends Component {
             <Input placeholder="city or postcode" />
           </Item>
 
-          <Button primary rounded medium style={searchButton}>
+          <Button
+            primary
+            rounded
+            medium
+            style={searchButton}
+            onPress={this.onSearchPres}
+          >
             <Text
               style={{
                 fontSize: 14,
@@ -41,20 +76,19 @@ class HomeScreen extends Component {
               Go
             </Text>
           </Button>
-    </View>    
-          <Button primary rounded style={locationButton}>
-            <Icon name='search' />
-            <Text
-              style={{
-                fontSize: 14,
-                textAlign: "center",
-                color: "white"
-              }}
-            >
-              Find By Location
-            </Text>
-          </Button>
-       
+        </View>
+        <Button primary rounded style={locationButton}>
+          <Icon name="search" />
+          <Text
+            style={{
+              fontSize: 14,
+              textAlign: "center",
+              color: "white"
+            }}
+          >
+            Find By Location
+          </Text>
+        </Button>
 
       </View>
     );
@@ -90,11 +124,15 @@ const styles = {
     justifyContent: "center"
   },
   locationButton: {
-      marginTop: 15,
-      alignSelf: 'center',
-      width: 300,
-      justifyContent: 'center'
+    marginTop: 15,
+    alignSelf: "center",
+    width: 300,
+    justifyContent: "center"
   }
 };
 
-export default HomeScreen;
+const mapStateToProps = ({ listHome }) => {
+  return { homes: listHome };
+};
+
+export default connect(mapStateToProps, { fetchHome })(HomeScreen);
