@@ -14,9 +14,7 @@ class HomeScreen extends Component {
    onSearchPres = () => {
   // this.setState( { isReady: false } )
    this.props.fetchHome( () => {
-      this.props.navigation.navigate("listhome", {
-      homes: this.props.homes
-    });
+      this.props.navigation.navigate("listhome");
    } );
     
     // this.setState( { isReady: true } )

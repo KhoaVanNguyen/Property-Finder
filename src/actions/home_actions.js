@@ -7,7 +7,7 @@ export const fetchHome = (onSuccess) => async dispatch => {
   try {
     const results = await axios.get(url);
     const data = results.data.response.listings;
-    console.log(data)
+    // console.log(data)
     dispatch({ type: FETCH_HOME_SUCCESS, payload: data });
     onSuccess()
   } catch (e) {
