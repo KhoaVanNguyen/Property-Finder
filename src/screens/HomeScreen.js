@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TextInput, ActivityIndicator } from "react-native";
 import { Button, Container, Content, Item, Input, Icon } from "native-base";
-import RoundedBox from "../components/RoundedBox";
 import { connect } from "react-redux";
 import { fetchHome } from "../actions/home_actions";
 import { AppLoading } from 'expo'
@@ -12,12 +11,14 @@ class HomeScreen extends Component {
   state = { 
     isReady: true
   }
-   onSearchPres = async () => {
-    // this.setState( { isReady: false } )
-    // await this.props.fetchHome();
-    this.props.navigation.navigate("listhome", {
+   onSearchPres = () => {
+  // this.setState( { isReady: false } )
+   this.props.fetchHome( () => {
+      this.props.navigation.navigate("listhome", {
       homes: this.props.homes
     });
+   } );
+    
     // this.setState( { isReady: true } )
 
   }
